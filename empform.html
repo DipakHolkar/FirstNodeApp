@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        function makeRequest() {
+            //ajax should be acceessible from updatePage()
+            ajax = createAjaxObject();
+            if (ajax)
+                alert("ajax obj created");
+
+            ajax.onreadystatechange = updatePage;
+
+            var url = "http://localhost:9000/empdetails?empid=" + document.f1.eid.value; 
+            alert(url);
+            ajax.open('GET', url, true);
+
+            ajax.send("");
+
+            
+        }
+
+        function updatePage() {
+            alert(ajax.readyState);
+            if (ajax.readyState == 4)
+                document.getElementById("details").innerHTML = ajax.responseText;
+        }
+
+
+        function createAjaxObject() {
+            //diff with diff browsers
+            try { //for IE browser
+                var ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                return ajax;
+            }
+            catch (e) {
+                try {   //for non-IE browsers
+                    var ajax = new XMLHttpRequest();
+                    return ajax;
+                }
+                catch (e) {
+                    alert("browser does not support ajax");
+                }
+            }
+
+    </script>
+</head>
+<body>
+    <form name="f1">
+        Enter empid : <input type="number" name="eid" />
+        <br/>
+        <input type="button" value="Get Details"
+               onclick="makeRequest()" />
+    </form>
+    <div id="details"></div>
+</body>
+</html>

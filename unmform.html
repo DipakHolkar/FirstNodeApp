@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        //1. event caught and function called
+        function makeRequest() {
+            //2. ajax object created
+            obj = createAjaxObject();
+            if (obj)
+                alert("ajax object created");
+
+            //3. Intialize the request - url, data, method, sync/async
+            //url - http://localhost:9000/getMessage
+            var url = "http://localhost:9000/getMessage?nm=" + document.f1.nm.value;
+            alert(url);
+            //3. initilaize the request
+            obj.open('GET', url, true);
+
+        }
+
+        function createAjaxObject() {
+            //diff with diff browsers
+            try { //for IE browser
+                var ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                return ajax;
+            }
+            catch (e) {
+                try {   //for non-IE browsers
+                    var ajax = new XMLHttpRequest();
+                    return ajax;
+                }
+                catch (e) {
+                    alert("browser does not support ajax");
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <form name="f1">
+        Enter name : <input type="text" name="nm" />
+        <br/>
+        <input type="button" value="GREET"
+               onclick="makeRequest()" />
+    </form>
+</body>
+</html>
